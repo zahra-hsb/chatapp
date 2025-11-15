@@ -1,9 +1,9 @@
 "use client"
 import { useForm } from "react-hook-form";
-import Card from "../globals/Card";
-import TextInput from "../globals/TextInput";
-import Logo from "../globals/Logo";
-import Button from "../globals/Button";
+import Card from "../../globals/Card";
+import TextInput from "../../globals/TextInput";
+import Logo from "../../globals/Logo";
+import Button from "../../globals/Button";
 
 
 
