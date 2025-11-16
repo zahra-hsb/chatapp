@@ -7,7 +7,9 @@ import Button from "../../globals/Button";
 
 
 
-const LoginForm = () => {
+const LoginForm = ({ handleJoinRoom }: {
+    handleJoinRoom: () => void
+}) => {
     const { register } = useForm();
     return (
         <Card className="overflow-hidden flex flex-col items-center justify-center gap-5 dark:bg-gray-950! border-2">
@@ -15,7 +17,7 @@ const LoginForm = () => {
             <form className="space-y-5">
                 <TextInput label="username" id="username" type="text" required register={register} placeholder="Enter your username..." />
                 <TextInput label="chatroom title" id="chatRoomTitle" type="text" required register={register} placeholder="Enter chatroom title" />
-                <Button onClick={() => console.log("")} className="border! border-white!">
+                <Button onClick={() => handleJoinRoom()} className="border! border-white!">
                     Login
                 </Button>
             </form>

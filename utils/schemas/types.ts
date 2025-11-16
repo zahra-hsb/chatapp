@@ -4,7 +4,7 @@ import { UseFormRegister } from "react-hook-form";
 export type ProIdType = { id: "add" | string };
 
 export interface SubmitButtonType {
-  text: string;
+  text: string | ReactNode;
   icon?: ReactNode;
 }
 
