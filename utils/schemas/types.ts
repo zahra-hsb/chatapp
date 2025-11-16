@@ -25,7 +25,7 @@ export interface TextInputType {
   placeholder?: string;
   dir?: "ltr" | "rtl";
   icon?: ReactNode;
-  name?: string;
+  name: string;
   //   register: unknown;
   required: boolean;
   register: UseFormRegister<{

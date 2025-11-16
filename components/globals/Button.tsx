@@ -9,7 +9,7 @@ const Button = ({
   children: ReactNode;
   disabled?: boolean;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <button

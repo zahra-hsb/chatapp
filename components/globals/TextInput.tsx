@@ -1,3 +1,4 @@
+"use client"
 import { TextInputType } from "@/utils/schemas/types";
 
 const TextInput = ({
@@ -9,7 +10,7 @@ const TextInput = ({
   dir,
   icon,
   register,
-  // name,
+  name,
   required
 }: TextInputType) => {
   return (
@@ -23,8 +24,7 @@ const TextInput = ({
           className={`border-b p-2 rounded- placeholder:text-gray-500 outline-0 px-3 focus:shadow-lg w-full shadow-sm ${className} ${icon ? 'pl-12' : ''}`}
           placeholder={placeholder}
           id={id}
-          // name={name}
-          {...register(id, { required })}
+          {...register(name || id, { required })}
         />
       </div>
     </div>

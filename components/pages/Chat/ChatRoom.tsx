@@ -4,17 +4,30 @@ import ChatMessage from "./ChatMessage";
 import { useForm } from "react-hook-form";
 import { BiSend } from "react-icons/bi";
 import Button from "@/components/globals/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatMsgType } from "@/utils/schemas/types";
 import SubmitButton from "@/components/globals/SubmitButton";
+import { socket } from "@/lib/socketClient";
 
-const ChatRoom = () => {
+const ChatRoom = ({ userName }: {
+    userName: string;
+}) => {
     const { register, handleSubmit, resetField } = useForm<{ [key: string]: string; }>();
-    const [room, setRoom] = useState("")
-    const [userName, setUserName] = useState("")
     const [messages, setMessages] = useState<
         { msg: string; username: string }[]
     >([])
+
+    useEffect(() => {
+        socket.on("user_joined", (message) => {
+            console.log('user joined... ', message)
+            setMessages((prev) => [...prev, { username: "system", msg: message }])
+        })
+
+        return () => {
+            socket.off("user_joined")
+            socket.off("message")
+        }
+    }, [])
 
     function onSubmit(data: {
         textMessage: string
@@ -52,7 +65,7 @@ const ChatRoom = () => {
                 <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" /> */}
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full px-20 flex justify-between items-center border-t-2 py-2 shrink-0">
-                <TextInput id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
+                <TextInput name="textMessage" id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
                 <SubmitButton text={<BiSend size={30} />} />
             </form>
         </section>
