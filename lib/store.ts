@@ -10,6 +10,9 @@ interface RoomStoreType {
 
     userName: string;
     setUserName: (userName: string) => void;
+
+    chatRoomTitle: string;
+    setChatRoomTitle: (chatRoomTitle: string) => void;
 }
 
 const roomStore = create(
@@ -24,10 +27,13 @@ const roomStore = create(
             })),
 
         userName: "",
-        setUserName: (userName) => set({ userName })
+        setUserName: (userName) => set({ userName }),
+
+        chatRoomTitle: "",
+        setChatRoomTitle: (chatRoomTitle) => set({ chatRoomTitle })
     }), {
         name: 'room-storage',
-        storage: createJSONStorage(() => localStorage)
+        // storage: createJSONStorage(() => localStorage)
     })
 );
 

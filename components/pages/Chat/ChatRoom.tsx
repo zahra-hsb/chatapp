@@ -10,18 +10,25 @@ import SubmitButton from "@/components/globals/SubmitButton";
 import { socket } from "@/lib/socketClient";
 import { roomStore } from "@/lib/store";
 
-const ChatRoom = ({ userName }: {
+const ChatRoom = ({ userName, chatRoomTitle }: {
     userName: string;
+    chatRoomTitle: string
 }) => {
     const { register, handleSubmit, resetField } = useForm<{ [key: string]: string; }>();
-    // const [messages, setMessages] = useState<
-    //     { msg: string; username: string }[]
-    // >([])
-    const { messages, setMessages } = roomStore()
+    const [messages, setMessages] = useState<
+        { msg: string; username: string }[]
+    >([])
+    // const { messages, setMessages, chatRoomTitle } = roomStore()
     useEffect(() => {
+        socket.on("message", (data) => {
+            console.log('user joined... ', messages)
+            setMessages(prev => [...prev, { msg: data.message, username: data.username }]);
+        })
+
         socket.on("user_joined", (message) => {
             console.log('user joined... ', message, messages)
-            setMessages({ username: "system", msg: message });
+            setMessages(prev => [...prev, { username: "system", msg: message }]);
+            // setMessages({ username: "system", msg: message });
         })
 
         return () => {
@@ -33,9 +40,14 @@ const ChatRoom = ({ userName }: {
     function onSubmit(data: {
         textMessage: string
     }) {
+        socket.emit("message", {
+            room: chatRoomTitle,
+            message: data.textMessage,
+            username: userName
+        })
         console.log(data)
-        setMessages({ msg: data.textMessage, username: userName })
-        resetField('textMessage')
+        setMessages(prev => [...prev, { msg: data.textMessage, username: userName }])
+        resetField('textMessage');
     }
     return (
         <section className="w-full h-screen max-w-7xl flex flex-col">
@@ -57,18 +69,6 @@ const ChatRoom = ({ userName }: {
                         <p className="bg-gray-400/40 px-2 rounded">No messages here...</p>
                     </div>
                 }
-                {/* <ChatMessage isOwnMsg isSystemMsg={false} msg="hi" username="zahra" />
-
-                <ChatMessage isOwnMsg={false} isSystemMsg={true} msg="zahra left the group" />
-                <ChatMessage isSystemMsg={false} msg="zahra dfgkjhdjfkghkhgfkjhfgkjdhfgjkh djfkhgkjdhfgjkhdfgkjh dkfjghkdjfhgkjhdfg kjdhfgkjhdfkjgh kjhdfgkjhdgf " username="sara" />
-                <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" />
-                <ChatMessage isSystemMsg={false} msg="zahra dfgkjhdjfkghkhgfkjhfgkjdhfgjkh djfkhgkjdhfgjkhdfgkjh dkfjghkdjfhgkjhdfg kjdhfgkjhdfkjgh kjhdfgkjhdgf " username="sara" />
-                <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" />
-                <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" />
-                <ChatMessage isSystemMsg={false} msg="zahra dfgkjhdjfkghkhgfkjhfgkjdhfgjkh djfkhgkjdhfgjkhdfgkjh dkfjghkdjfhgkjhdfg kjdhfgkjhdfkjgh kjhdfgkjhdgf " username="sara" />
-                <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" />
-                <ChatMessage isSystemMsg={false} msg="zahra dfgkjhdjfkghkhgfkjhfgkjdhfgjkh djfkhgkjdhfgjkhdfgkjh dkfjghkdjfhgkjhdfg kjdhfgkjhdfkjgh kjhdfgkjhdgf " username="sara" />
-                <ChatMessage isOwnMsg isSystemMsg={false} msg="jan" username="zahra" /> */}
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full px-20 flex justify-between items-center border-t-2 py-2 shrink-0">
                 <TextInput name="textMessage" id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
