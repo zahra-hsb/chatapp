@@ -6,6 +6,7 @@ export type ProIdType = { id: "add" | string };
 export interface SubmitButtonType {
   text: string | ReactNode;
   icon?: ReactNode;
+  className?: string;
 }
 
 export interface UserInfoType {

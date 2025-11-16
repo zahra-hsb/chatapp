@@ -52,13 +52,14 @@ const ChatRoom = ({ userName, chatRoomTitle }: {
     return (
         <section className="w-full h-screen max-w-7xl flex flex-col">
             <div className="p-5 border-b-2 dark:text-white dark:border-b-white flex itema-center justify-between w-full capitalize">
-                {'chatroom name'}
+                {chatRoomTitle}
             </div>
             <div className="p-5 flex-1 overflow-y-auto scroll-smooth">
                 {messages.length > 0 ?
                     messages.map((msg, index) => (
                         <ChatMessage
                             msg={msg?.msg}
+                            username={msg.username}
                             key={index}
                             isOwnMsg={msg?.username === userName}
                             isSystemMsg={msg?.username === "system"}
@@ -72,7 +73,7 @@ const ChatRoom = ({ userName, chatRoomTitle }: {
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full px-20 flex justify-between items-center border-t-2 py-2 shrink-0">
                 <TextInput name="textMessage" id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
-                <SubmitButton text={<BiSend size={30} />} />
+                <SubmitButton text={<BiSend size={30} />} className="w-12!" />
             </form>
         </section>
     )

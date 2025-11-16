@@ -8,6 +8,7 @@ const ChatMessage = ({
     username,
     msg
 }: ChatMsgType) => {
+    console.log(username)
     return (
         <>
             <div className={`${isSystemMsg ? "items-center" : isOwnMsg ? "items-start" : "items-end"} w-full flex flex-col justify-center mb-3`}>
