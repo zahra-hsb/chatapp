@@ -1,3 +1,4 @@
+import { ChatMsgType } from "@/utils/schemas/types";
 
 
 
@@ -6,12 +7,7 @@ const ChatMessage = ({
     isOwnMsg,
     username,
     msg
-}: {
-    isSystemMsg?: boolean;
-    isOwnMsg?: boolean;
-    username?: string;
-    msg: string;
-}) => {
+}: ChatMsgType) => {
     return (
         <>
             <div className={`${isSystemMsg ? "items-center" : isOwnMsg ? "items-start" : "items-end"} w-full flex flex-col justify-center mb-3`}>

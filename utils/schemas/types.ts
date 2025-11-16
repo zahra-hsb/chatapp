@@ -50,3 +50,10 @@ export interface PaginationPropsType {
   nextPageIcon: ReactNode;
   prevPageIcon: ReactNode;
 }
+
+export interface ChatMsgType {
+  isSystemMsg?: boolean;
+  isOwnMsg?: boolean;
+  username?: string;
+  msg: string;
+}
