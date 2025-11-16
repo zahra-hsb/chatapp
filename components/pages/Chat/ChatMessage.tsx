@@ -17,7 +17,9 @@ const ChatMessage = ({
                         ? "bg-gray-500"
                         : "border dark:text-white"
                     }`}>
-                    {!isSystemMsg && !isOwnMsg ? <p className="text-xs">{username}</p> : isOwnMsg ? <p className="text-xs">you</p> : ""}
+                    {!isSystemMsg && !isOwnMsg ?
+                        <p className="text-xs">{username}</p> : isOwnMsg ? <p className="text-xs">you</p> : ""
+                    }
                     <p className="text-base">{msg}</p>
                 </div>
             </div>

@@ -1,20 +1,18 @@
 "use client"
-import { useForm, UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import Card from "../../globals/Card";
 import TextInput from "../../globals/TextInput";
 import Logo from "../../globals/Logo";
-import Button from "../../globals/Button";
-import { Dispatch, FormEventHandler, SetStateAction } from "react";
+import { FormEventHandler } from "react";
 import SubmitButton from "@/components/globals/SubmitButton";
 
 
 
-const LoginForm = ({ handleJoinRoom, setValue, handleSubmit, register }: {
+const LoginForm = ({ handleJoinRoom, handleSubmit, register }: {
     handleJoinRoom: (data: {
         room: string;
         userName: string;
     }) => void;
-    setValue: (name: "chatRoomTitle" | "username", value: string) => void;
     handleSubmit: (func: (data: {
         username: string;
         chatRoomTitle: string;

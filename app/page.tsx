@@ -7,14 +7,14 @@ import { roomStore } from "@/lib/store";
 
 export default function Home() {
 
-  const { register, handleSubmit, getValues, setValue } = useForm<{
+  const { register, handleSubmit } = useForm<{
     username: string;
     chatRoomTitle: string;
   }>();
 
   // const room = getValues("chatRoomTitle")
-  const userName = getValues("username")
-  const { setJoined, isJoined }  = roomStore()
+  // const userName = getValues("username")
+  const { setJoined, isJoined, setUserName, userName }  = roomStore()
   function handleJoinRoom(data: {
     room: string;
     userName: string;
@@ -24,6 +24,8 @@ export default function Home() {
       socket.emit("join-room", {
         room: data.room, username: data.userName
       })
+      setUserName(data.userName)
+      
       setJoined(true)
     }
 
@@ -31,7 +33,7 @@ export default function Home() {
   return (
     <section className="flex items-center justify-center h-screen">
       {!isJoined ?
-        <LoginForm register={register} handleSubmit={handleSubmit} setValue={setValue} handleJoinRoom={handleJoinRoom} />
+        <LoginForm register={register} handleSubmit={handleSubmit} handleJoinRoom={handleJoinRoom} />
         :
         <ChatRoom userName={userName} />
       }

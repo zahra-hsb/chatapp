@@ -8,19 +8,20 @@ import { useEffect, useState } from "react";
 import { ChatMsgType } from "@/utils/schemas/types";
 import SubmitButton from "@/components/globals/SubmitButton";
 import { socket } from "@/lib/socketClient";
+import { roomStore } from "@/lib/store";
 
 const ChatRoom = ({ userName }: {
     userName: string;
 }) => {
     const { register, handleSubmit, resetField } = useForm<{ [key: string]: string; }>();
-    const [messages, setMessages] = useState<
-        { msg: string; username: string }[]
-    >([])
-
+    // const [messages, setMessages] = useState<
+    //     { msg: string; username: string }[]
+    // >([])
+    const { messages, setMessages } = roomStore()
     useEffect(() => {
         socket.on("user_joined", (message) => {
-            console.log('user joined... ', message)
-            setMessages((prev) => [...prev, { username: "system", msg: message }])
+            console.log('user joined... ', message, messages)
+            setMessages({ username: "system", msg: message });
         })
 
         return () => {
@@ -33,7 +34,7 @@ const ChatRoom = ({ userName }: {
         textMessage: string
     }) {
         console.log(data)
-        setMessages(prev => [...prev, { msg: data.textMessage, username: userName }])
+        setMessages({ msg: data.textMessage, username: userName })
         resetField('textMessage')
     }
     return (
@@ -44,7 +45,12 @@ const ChatRoom = ({ userName }: {
             <div className="p-5 flex-1 overflow-y-auto scroll-smooth">
                 {messages.length > 0 ?
                     messages.map((msg, index) => (
-                        <ChatMessage msg={msg.msg} key={index} isOwnMsg={msg.username === userName} />
+                        <ChatMessage
+                            msg={msg?.msg}
+                            key={index}
+                            isOwnMsg={msg?.username === userName}
+                            isSystemMsg={msg?.username === "system"}
+                        />
                     ))
                     :
                     <div className="w-full h-full flex items-center justify-center ">
