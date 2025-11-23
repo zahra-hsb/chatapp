@@ -3,7 +3,7 @@ import ChatRoom from "@/components/pages/Chat/ChatRoom";
 import LoginForm from "@/components/pages/Login/LoginForm";
 import { socket } from "@/lib/socketClient";
 import { useForm } from "react-hook-form";
-import { roomStore } from "@/lib/store";
+// import { roomStore } from "@/lib/store";
 import { useState } from "react";
 
 export default function Home() {
