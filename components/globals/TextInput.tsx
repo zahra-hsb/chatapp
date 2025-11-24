@@ -1,7 +1,8 @@
 "use client"
 import { TextInputType } from "@/utils/schemas/types";
+import { FieldValues, Path } from "react-hook-form";
 
-const TextInput = ({
+const TextInput = <TFormValues extends FieldValues = FieldValues>({
   label,
   id,
   type,
@@ -11,8 +12,9 @@ const TextInput = ({
   icon,
   register,
   name,
-  required
-}: TextInputType) => {
+  required,
+  registerId
+}: TextInputType<TFormValues>) => {
   return (
     <div className="flex flex-col items-start gap-2 w-full">
       <div className="w-full relative">
@@ -24,7 +26,7 @@ const TextInput = ({
           className={`border-b p-2 rounded- placeholder:text-gray-500 outline-0 px-3 focus:shadow-lg w-full shadow-sm ${className} ${icon ? 'pl-12' : ''}`}
           placeholder={placeholder}
           id={id}
-          {...register(name || id, { required })}
+          {...register(registerId, { required })}
         />
       </div>
     </div>

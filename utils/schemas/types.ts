@@ -1,5 +1,5 @@
 import { Dispatch, HTMLInputTypeAttribute, ReactNode, SetStateAction } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldValues, Path, RegisterOptions, UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 
 export type ProIdType = { id: "add" | string };
 
@@ -18,9 +18,10 @@ export interface UserInfoType {
   tel: string;
 }
 
-export interface TextInputType {
+export interface TextInputType<TFormValues extends FieldValues = FieldValues> {
   label?: string;
-  id: "username" | "chatRoomTitle" | "textMessage"
+  id: string;
+  registerId: Path<TFormValues>;
   type: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
@@ -29,9 +30,7 @@ export interface TextInputType {
   name: string;
   //   register: unknown;
   required: boolean;
-  register: UseFormRegister<{
-    [key: string]: string;
-  }>
+  register: UseFormRegister<TFormValues>;
 }
 
 export type Inputs = {
@@ -57,4 +56,9 @@ export interface ChatMsgType {
   isOwnMsg?: boolean;
   username?: string;
   msg: string;
+}
+
+export interface LoginFormType {
+  room: string;
+  userName: string;
 }

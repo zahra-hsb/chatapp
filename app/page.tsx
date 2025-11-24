@@ -5,18 +5,15 @@ import { socket } from "@/lib/socketClient";
 import { useForm } from "react-hook-form";
 // import { roomStore } from "@/lib/store";
 import { useState } from "react";
+import { LoginFormType } from "@/utils/schemas/types";
 
 export default function Home() {
 
-  const { register, handleSubmit } = useForm<{
-    username: string;
-    chatRoomTitle: string;
-  }>();
-
+  const { register, handleSubmit } = useForm<LoginFormType>();
   // const room = getValues("chatRoomTitle")
   // const userName = getValues("username")
-  const [isJoined, setJoined ] = useState(false)
-  const [userName, setUserName ] = useState("")
+  const [isJoined, setJoined] = useState(false)
+  const [userName, setUserName] = useState("")
   const [chatRoomTitle, setChatRoomTitle] = useState("")
   // const { } = roomStore()
   function handleJoinRoom(data: {

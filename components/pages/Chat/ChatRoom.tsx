@@ -14,10 +14,10 @@ const ChatRoom = ({ userName, chatRoomTitle }: {
     userName: string;
     chatRoomTitle: string
 }) => {
-    const { register, handleSubmit, resetField } = useForm<{ [key: string]: string; }>();
+    const { register, handleSubmit, resetField } = useForm<{ textMessage: string }>();
     const [messages, setMessages] = useState<
         { msg: string; username: string }[]
-    >([])
+    >([]);
     // const { messages, setMessages, chatRoomTitle } = roomStore()
     useEffect(() => {
         socket.on("message", (data) => {
@@ -72,7 +72,7 @@ const ChatRoom = ({ userName, chatRoomTitle }: {
                 }
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full px-20 flex justify-between items-center border-t-2 py-2 shrink-0">
-                <TextInput name="textMessage" id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
+                <TextInput registerId={"textMessage"} name="textMessage" id="textMessage" register={register} required={false} type="text" className="w-full! border-0!" placeholder="Enter your message here..." />
                 <SubmitButton text={<BiSend size={30} />} className="w-12!" />
             </form>
         </section>
